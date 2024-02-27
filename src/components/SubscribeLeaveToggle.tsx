@@ -5,7 +5,7 @@ import { Button } from "./ui/Button";
 import { SubscribeToSubredditPayload } from "@/lib/validators/subreddit";
 import axios, { AxiosError } from "axios";
 import { toast } from "@/hooks/use-toast";
-import { useCustomToast } from "@/hooks/use-custom-toast";
+import { useCustomToast } from "@/hooks/use-custom-toasts";
 import { useRouter } from "next/navigation";
 import { startTransition } from "react";
 

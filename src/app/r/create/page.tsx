@@ -8,7 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { CreateSubredditPayload } from "@/lib/validators/subreddit";
 import { toast } from "@/hooks/use-toast";
-import { useCustomToast } from "@/hooks/use-custom-toast";
+import { useCustomToast } from "@/hooks/use-custom-toasts";
 
 const Page = () => {
   const router = useRouter();
@@ -48,14 +48,14 @@ const Page = () => {
       }
 
       return toast({
-        title:"there was an error",
-        description:"couldn't create subreddit",
-        variant:"destructive"
-      })
+        title: "there was an error",
+        description: "couldn't create subreddit",
+        variant: "destructive",
+      });
     },
-    onSuccess:(data) => {
-      router.push(`/r/${data}`)
-    }
+    onSuccess: (data) => {
+      router.push(`/r/${data}`);
+    },
   });
 
   return (
