@@ -8,6 +8,7 @@ import axios from "axios";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import Post from "./Post";
+import { Loader2 } from "lucide-react";
 
 interface PostFeedProps {
   initialPosts: ExtendedPost[];
@@ -22,7 +23,6 @@ export const PostFeed: FC<PostFeedProps> = ({
     root: lastPostRef.current,
     threshold: 1,
   });
-
   const { data: session } = useSession();
 
   const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
@@ -46,12 +46,11 @@ export const PostFeed: FC<PostFeedProps> = ({
 
   useEffect(() => {
     if (entry?.isIntersecting) {
-      fetchNextPage();
+      fetchNextPage(); // Load more posts when the last post comes into view
     }
   }, [entry, fetchNextPage]);
 
   const posts = data?.pages.flatMap((page) => page) ?? initialPosts;
-
 
   return (
     <ul className="flex flex-col col-span-2 space-y-6">
@@ -67,6 +66,7 @@ export const PostFeed: FC<PostFeedProps> = ({
         );
 
         if (index === posts.length - 1) {
+          // Add a ref to the last post in the list
           return (
             <li key={post.id} ref={ref}>
               <Post
@@ -91,6 +91,12 @@ export const PostFeed: FC<PostFeedProps> = ({
           );
         }
       })}
+
+      {isFetchingNextPage && (
+        <li className="flex justify-center">
+          <Loader2 className="w-6 h-6 text-zinc-500 animate-spin" />
+        </li>
+      )}
     </ul>
   );
 };
