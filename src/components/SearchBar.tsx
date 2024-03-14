@@ -1,19 +1,25 @@
 "use client"
 
-import { useRouter } from 'next/navigation'
-import React, { useCallback, useState } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from './ui/Command'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { Prisma, Subreddit } from '@prisma/client'
 import { Users } from 'lucide-react'
 import debounce from 'lodash.debounce'
+import { useOnClickOutside } from '@/hooks/use-on-click-outside'
 
 export const SearchBar = () => {
 
     const router = useRouter()
     const [input, setInput] = useState('')
 
+    const pathname = usePathname()
+    const searchCommandRef = useRef<HTMLDivElement>(null)
+    useOnClickOutside(searchCommandRef,() =>setInput(''))
+
+    useEffect(()=>setInput(''), [pathname])
     const request = debounce(async ()=>{
         refetch()
     },300)
@@ -33,9 +39,10 @@ export const SearchBar = () => {
         queryKey:['search-query'],
         enabled:false
     })
+    
 
   return (
-    <Command className='relative rounded-lg max-w-lg z-50 overflow-visible'>
+    <Command ref={searchCommandRef} className='relative rounded-lg max-w-lg z-50 overflow-visible'>
         <CommandInput
         isLoading={isFetching}
         className='outline-none border-none focus:border-none focus:outline-none ring-0'
