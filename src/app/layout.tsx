@@ -12,8 +12,8 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Breadit",
-  description: "A Reddit clone built with Next.js and TypeScript.",
+  title: "Unmuted",
+  description: "A Reddit clone built with Next.js and TypeScript.The platform for open & unfiltered conversation.",
 };
 
 export default function RootLayout({
