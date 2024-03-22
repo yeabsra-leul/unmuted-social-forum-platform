@@ -1,2 +1,2 @@
-# reddit-clone
-a reddit clone made with next.js
+# Unmuted
+an open-source social forum platform for open & unfiltered conversation
